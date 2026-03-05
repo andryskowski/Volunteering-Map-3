@@ -1,0 +1,28 @@
+[
+  {
+    "_id": "1",
+    "img": "https://uxwing.com/wp-content/themes/uxwing/download/buildings-architecture-real-estate/home-color-icon.png",
+    "name": "Fundacja No 1",
+    "city": "Łódź",
+    "street": "Wierzbowa 17",
+    "houseNo": "17",
+    "postalCode": "92-480",
+    "category": "children",
+    "district": "main district",
+    "date": "2020-12-12T01:01:01",
+    "shortDescription": "description"
+  },
+  {
+    "_id": "2",
+    "img": "https://uxwing.com/wp-content/themes/uxwing/download/buildings-architecture-real-estate/home-color-icon.png",
+    "name": "Fundacja No 2",
+    "city": "Łódź",
+    "street": "Wierzbowa 13",
+    "houseNo": "17",
+    "postalCode": "92-480",
+    "category": "children",
+    "district": "main district",
+    "date": "2020-12-10T01:01:01",
+    "shortDescription": "description"
+  }
+]
