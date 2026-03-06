@@ -1,0 +1,111 @@
+<div class="page-container placeform-page">
+  <h1 class="page-header">Place Form</h1>
+
+  <form class="form" [formGroup]="placeForm">
+    <label>
+      Place Name
+      <input formControlName="placeName" />
+    </label>
+
+    <label>
+      Web Page
+      <input formControlName="webPage" />
+    </label>
+
+    <label>
+      Email
+      <input formControlName="email" />
+    </label>
+
+    <label>
+      Phone
+      <input formControlName="phone" />
+    </label>
+
+    <label>
+      City
+      <input formControlName="city" />
+    </label>
+
+    <label>
+      Street
+      <input formControlName="street" />
+    </label>
+
+    <label>
+      House No
+      <input formControlName="houseNo" />
+    </label>
+
+    <label>
+      Postal Code
+      <input formControlName="postalCode" />
+    </label>
+
+    <label>
+      District
+      <select formControlName="district">
+        <option value="Bałuty">Bałuty</option>
+        <option value="Śródmieście">Śródmieście</option>
+        <option value="Widzew">Widzew</option>
+        <option value="Polesie">Polesie</option>
+        <option value="Górna">Górna</option>
+        <option value="inna" selected>Other</option>
+      </select>
+    </label>
+
+    <label>
+      Logo
+      <input formControlName="logo" />
+    </label>
+
+    <label>
+      Category
+      <select formControlName="category">
+        <option value="children">Children</option>
+        <option value="animals">Animals</option>
+        <option value="invalids">Invalids</option>
+        <option value="addictions">Addictions</option>
+        <option value="retirees">Retirees</option>
+        <option value="inne" selected>Other</option>
+      </select>
+    </label>
+
+    <label>
+      Short Description
+      <input formControlName="shortDescription" />
+    </label>
+
+    <label> Description </label>
+
+    <input id="send" type="submit" value="Send" (click)="handleSubmit($event)" />
+  </form>
+</div>
+
+<div class="modal-overlay" *ngIf="showConfirmationModal">
+  <div class="modal-content">
+    <h2>Place Added Successfully!</h2>
+    <p>Place has been added.</p>
+    <p>Place Name:</p>
+    <div class="modal-place-info">
+      <p><b>Name:</b> {{ infoAboutCurrentPlace.placeName }}</p>
+      <p>
+        <b>Address:</b> {{ infoAboutCurrentPlace.city }}, {{ infoAboutCurrentPlace.street }},
+        {{ infoAboutCurrentPlace.houseNo }}, {{ infoAboutCurrentPlace.postalCode }}
+      </p>
+      <p><b>District:</b> {{ infoAboutCurrentPlace.district }}</p>
+      <p><b>Category:</b> {{ infoAboutCurrentPlace.category }}</p>
+      <p *ngIf="infoAboutCurrentPlace.shortDescription">
+        <b>Description:</b> {{ infoAboutCurrentPlace.shortDescription }}
+      </p>
+      <img
+        *ngIf="infoAboutCurrentPlace.logo"
+        [src]="infoAboutCurrentPlace.logo"
+        alt="{{ infoAboutCurrentPlace.placeName }}"
+        class="modal-logo"
+      />
+    </div>
+    <button (click)="addPlace()">Add Place</button>
+    <button (click)="closeModal()">Close</button>
+  </div>
+</div>

@@ -10,4 +10,6 @@ export interface Place {
   district: string;
   date: Date;
   shortDescription: string;
+  lat?: number;
+  lng?: number;
 }

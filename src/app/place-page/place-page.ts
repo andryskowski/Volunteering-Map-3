@@ -12,6 +12,7 @@ import { Place } from '../../models/place.model';
   standalone: true,
   imports: [CommonModule, HttpClientModule, DatePipe],
   templateUrl: './place-page.html',
+  styleUrls: ['./place-page.scss']
 })
 export class PlacePage {
   place$!: Observable<Place | undefined>;

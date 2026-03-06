@@ -1,22 +1,22 @@
 <div class="page-container">
-  <h1 class="page-header">{{ 'Places List' }}</h1>
+  <h1 class="page-header">Places List</h1>
 
   <div class="filter">
     <form class="filters-form" [formGroup]="filterForm">
       <label>
-        {{ 'District' }}
+        District
         <select formControlName="district">
           <option value="Bałuty">Bałuty</option>
           <option value="Śródmieście">Śródmieście</option>
           <option value="Widzew">Widzew</option>
           <option value="Polesie">Polesie</option>
           <option value="Górna">Górna</option>
-          <option value="inna">{{ 'List of places.4' }}</option>
+          <option value="inna">Other</option>
         </select>
       </label>
 
       <label>
-        {{ 'Category' }}
+        Category
         <select formControlName="category">
           <option value="children">{{ 'Children' }}</option>
           <option value="animals">{{ 'Animals' }}</option>
@@ -28,7 +28,7 @@
       </label>
 
       <label>
-        {{ 'Sort' }}
+        Sort
         <select formControlName="sort">
           <option value="newest">{{ 'Newest' }}</option>
           <option value="oldest">{{ 'Oldest' }}</option>
@@ -36,22 +36,22 @@
       </label>
 
       <label>
-        {{ 'Search' }}
+        Search
         <input type="text" formControlName="searchName" />
       </label>
     </form>
   </div>
 
-  <div *ngFor="let place of filteredPlaces" class="place-list-item">
+  <div *ngFor="let place of paginatedPlaces" class="place-list-item">
     <div>
-      <a>
+      <a [routerLink]="['/place', place._id]">
         <img class="place-img" [src]="place.img" alt="place-img" width="100" height="100" />
       </a>
     </div>
 
     <div class="place-name">
       <h4>
-        <a>{{ place.name }}</a>
+        <a [routerLink]="['/place', place._id]">{{ place.name }}</a>
       </h4>
     </div>
 
@@ -60,28 +60,33 @@
     </div>
 
     <div class="place-category">
-      <p>
-        <b>{{ 'Category' }}</b> {{ place.category }}
-      </p>
+      <p><b>Category</b> {{ place.category }}</p>
     </div>
 
     <div class="place-district">
-      <p>
-        <b>{{ 'District' }}</b> {{ place.district }}
-      </p>
+      <p><b>'District'</b> {{ place.district }}</p>
     </div>
 
     <div class="place-date">
-      <p>
-        <b>{{ 'Date' }}</b> {{ place.date | date: 'yyyy-MM-dd HH:mm:ss' }}
-      </p>
+      <p><b>'Date'</b> {{ place.date | date: 'yyyy-MM-dd HH:mm:ss' }}</p>
     </div>
 
     <div class="short-description">
       <p>
-        <b>{{ 'Description' }}</b>
+        <b>'Description'</b>
       </p>
       <p>{{ place.shortDescription }}</p>
     </div>
   </div>
+</div>
+
+<div class="pagination">
+  <button
+    *ngFor="let page of [].constructor(totalPages); let i = index"
+    (click)="paginate(i + 1)"
+    [disabled]="currentPage === i + 1"
+    [class.active]="currentPage === i + 1"
+  >
+    {{ i + 1 }}
+  </button>
 </div>

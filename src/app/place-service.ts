@@ -12,17 +12,22 @@ export class PlaceService {
   loadPlaces(): Observable<Place[]> {
     if (this.places.length) return of(this.places);
 
-    return this.http
-      .get<Place[]>('/assets/data/places.json')
-      .pipe(tap((data) => (this.places = data)));
+    return this.http.get<Place[]>('http://localhost:8080/places').pipe(
+      tap((data) => {
+        this.places = data;
+        console.log(this.places);
+      }),
+    );
   }
 
-  getPlaceById(id: string): Observable<Place | undefined> {
-    return this.loadPlaces().pipe(
-      map((p) => {
-        console.log('ID from route:', id);
-        console.log('All places:', p);
-        return p.find((pl) => pl._id === id);
+  getPlaceById(id: string): Observable<Place> {
+    return this.http.get<Place>(`http://localhost:8080/places/${id}`);
+  }
+
+  postPlace(place: Place): Observable<Place> {
+    return this.http.post<Place>('http://localhost:8080/places', place).pipe(
+      tap((newPlace) => {
+        this.places.push(newPlace);
       }),
     );
   }

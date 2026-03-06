@@ -1,6 +1,14 @@
 <div *ngIf="place$ | async as p; else loading" class="page-container placepage-placeinfo">
-
   <h1>Place Page</h1>
+
+  <div class="place-img-container" *ngIf="p.img">
+    <img
+      [src]="p.img"
+      [alt]="p.name"
+      class="place-img"
+      style="max-width: 300px; border-radius: 8px; margin-bottom: 16px"
+    />
+  </div>
 
   <div class="placepage-places">
     <div class="place-name">
@@ -8,9 +16,7 @@
     </div>
 
     <div class="place-address">
-      <h5>
-        Address: {{ p.city }}, {{ p.street }}, {{ p.houseNo }}, {{ p.postalCode }}
-      </h5>
+      <h5>Address: {{ p.city }}, {{ p.street }}, {{ p.houseNo }}, {{ p.postalCode }}</h5>
     </div>
 
     <div class="place-category">
@@ -22,16 +28,14 @@
     </div>
 
     <div class="place-date">
-      <p><b>Date:</b> {{ p.date | date:'yyyy-MM-dd, HH:mm' }}</p>
+      <p><b>Date:</b> {{ p.date | date: 'yyyy-MM-dd, HH:mm' }}</p>
     </div>
 
     <div class="place-description" *ngIf="p.shortDescription">
       <p><b>Description:</b></p>
       <div [innerHTML]="p.shortDescription"></div>
     </div>
-
   </div>
-
 </div>
 
 <ng-template #loading>
