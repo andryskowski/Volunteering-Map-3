@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { MapComponent } from "../map/map";
+import { LegendComponent } from "../legend/legend";
 
 @Component({
   selector: 'app-main-page',
-  imports: [MapComponent],
+  imports: [MapComponent, LegendComponent],
   templateUrl: './main-page.html',
   styleUrl: './main-page.scss',
 })

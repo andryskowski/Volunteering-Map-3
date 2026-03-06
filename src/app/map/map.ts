@@ -18,6 +18,13 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
   `,
 })
 export class MapComponent {
+  pin1 = 'assets/gps1.svg'; // children
+  pin2 = 'assets/gps2.svg'; // animals
+  pin3 = 'assets/gps3.svg'; // invalids
+  pin4 = 'assets/gps4.svg'; // addictions
+  pin5 = 'assets/gps5.svg'; // retirees
+  pin6 = 'assets/gps6.svg'; // others
+
   options: MapOptions = {
     center: latLng(51.7686, 19.4565),
     zoom: 14,
@@ -30,16 +37,43 @@ export class MapComponent {
 
   constructor(private placeService: PlaceService) {}
 
+  getIconByCategory(category: string) {
+    let iconUrl = this.pin6;
+
+    switch (category) {
+      case 'children':
+        iconUrl = this.pin1;
+        break;
+      case 'animals':
+        iconUrl = this.pin2;
+        break;
+      case 'invalids':
+        iconUrl = this.pin3;
+        break;
+      case 'addictions':
+        iconUrl = this.pin4;
+        break;
+      case 'retirees':
+        iconUrl = this.pin5;
+        break;
+      default:
+        iconUrl = this.pin6;
+    }
+
+    return icon({
+      iconUrl: iconUrl,
+      iconSize: [32, 32],
+      iconAnchor: [16, 32],
+      popupAnchor: [0, -32],
+    });
+  }
+
   onMapReady(map: Map) {
     this.placeService.loadPlaces().subscribe((places: Place[]) => {
       places.forEach((p) => {
         if (p.lat != null && p.lng != null) {
           const m = marker([p.lat, p.lng], {
-            icon: icon({
-              iconSize: [25, 41],
-              iconAnchor: [12, 41],
-              iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
-            }),
+            icon: this.getIconByCategory(p.category),
           });
 
           m.bindPopup(`
