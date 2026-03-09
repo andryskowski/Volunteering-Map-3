@@ -1,33 +1,32 @@
 import { CommonModule, DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { Place } from '../../models/place.model';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+import { BehaviorSubject, finalize } from 'rxjs';
 import { PlaceService } from '../place-service';
+import { LoaderComponent } from '../loader/loader';
+import { Place } from '../../models/place.model';
 
 @Component({
   selector: 'app-list-places',
   templateUrl: './list-places.html',
   styleUrls: ['./list-places.scss'],
-  imports: [DatePipe, CommonModule, HttpClientModule, ReactiveFormsModule, RouterModule],
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, LoaderComponent, DatePipe],
 })
 export class ListPlaces implements OnInit {
   places: Place[] = [];
-  filteredPlaces: any = [];
-  paginatedPlaces: any = [];
+  filteredPlaces: Place[] = [];
+  paginatedPlaces: Place[] = [];
 
   filterForm: FormGroup;
-
   currentPage = 1;
   itemsPerPage = 4;
-  sortBy: string = '-';
 
-  constructor(
-    private fb: FormBuilder,
-    private http: HttpClient,
-    private placeService: PlaceService
-  ) {
+  private loadingSubject = new BehaviorSubject<boolean>(true);
+  loading$ = this.loadingSubject.asObservable();
+
+  constructor(private fb: FormBuilder, private placeService: PlaceService) {
     this.filterForm = this.fb.group({
       district: [''],
       category: [''],
@@ -37,41 +36,52 @@ export class ListPlaces implements OnInit {
   }
 
   ngOnInit(): void {
-    this.placeService.loadPlaces().subscribe((data) => {
-      this.places = data.map((p) => ({
-        ...p,
-        date: new Date(p.date),
-      }));
-
-      this.filterForm.patchValue({ sort: 'newest' }, { emitEvent: false });
+    this.filterForm.valueChanges.subscribe(() => {
+      this.currentPage = 1;
       this.applyFilters();
-
-      this.filterForm.valueChanges.subscribe(() => {
-        this.currentPage = 1;
-        this.applyFilters();
-      });
     });
+
+    this.fetchPlaces();
+  }
+
+  fetchPlaces(): void {
+    this.loadingSubject.next(true);
+
+    this.placeService.loadPlaces()
+      .pipe(finalize(() => this.loadingSubject.next(false)))
+      .subscribe({
+        next: (data) => {
+          this.places = data.map(p => ({ ...p, date: new Date(p.date) }));
+          this.applyFilters();
+        },
+        error: (err) => {
+          console.error('Error loading places', err);
+          this.places = [];
+          this.filteredPlaces = [];
+          this.paginatedPlaces = [];
+        }
+      });
   }
 
   applyFilters(): void {
     const { district, category, searchName, sort } = this.filterForm.value;
 
-    this.filteredPlaces = this.places.filter((place: any) => {
+    this.filteredPlaces = this.places.filter(place => {
       let match = true;
       if (district) match = match && place.district === district;
       if (category) match = match && place.category === category;
       if (searchName) {
         const search = searchName.toLowerCase().trim();
-        const name = place.name.toLowerCase();
+        const name = (place.name || '').toLowerCase();
         match = match && name.includes(search);
       }
       return match;
     });
 
     if (sort === 'newest') {
-      this.filteredPlaces.sort((a: any, b: any) => b.date.getTime() - a.date.getTime());
+      this.filteredPlaces.sort((a, b) => b.date.getTime() - a.date.getTime());
     } else if (sort === 'oldest') {
-      this.filteredPlaces.sort((a: any, b: any) => a.date.getTime() - b.date.getTime());
+      this.filteredPlaces.sort((a, b) => a.date.getTime() - b.date.getTime());
     }
 
     this.paginate(this.currentPage);
@@ -85,6 +95,6 @@ export class ListPlaces implements OnInit {
   }
 
   get totalPages(): number {
-  return Math.ceil(this.filteredPlaces.length / this.itemsPerPage);
-}
+    return Math.ceil(this.filteredPlaces.length / this.itemsPerPage);
+  }
 }

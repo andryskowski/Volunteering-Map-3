@@ -1,1 +1,27 @@
-<p>contact works!</p>
+<div class="contact-page page-container">
+  <h1 class="page-header">Contact</h1>
+  <h3>"Have a question? Notice an error on the site? Using the form below, you can easily get in touch with the site administrator."</h3>
+  <form [formGroup]="contactForm" (ngSubmit)="sendEmail()" id="contactForm" class="form-contact">
+    <label>
+      Name
+      <input formControlName="name" name="name" class="message-input" />
+    </label>
+
+    <label>
+      Email
+      <input formControlName="email" name="email" class="message-input" />
+    </label>
+
+    <label>
+      Subject
+      <input formControlName="subject" name="subject" class="message-input" />
+    </label>
+
+    <label>
+      Message
+      <textarea formControlName="message" name="message" class="message-input"></textarea>
+    </label>
+
+    <button type="submit">Send</button>
+  </form>
+</div>

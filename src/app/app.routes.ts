@@ -4,6 +4,8 @@ import { MainPage } from './main-page/main-page';
 import { ListPlaces } from './list-places/list-places';
 import { PlacePage } from './place-page/place-page';
 import { PlaceForm } from './place-form/place-form';
+import { UserPanel } from './users-panel/users-panel';
+import { Auth } from './auth/auth';
 
 export const routes: Routes = [
   { path: '', component: MainPage },
@@ -11,5 +13,7 @@ export const routes: Routes = [
   { path: 'listplaces', component: ListPlaces },
   { path: 'place/:id', component: PlacePage },
   { path: 'place-form', component: PlaceForm},
+  { path: 'users-panel', component: UserPanel},
+  { path: 'auth', component: Auth},
   { path: '**', redirectTo: '', pathMatch: 'full' }, 
 ];

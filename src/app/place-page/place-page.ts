@@ -6,11 +6,13 @@ import { switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { PlaceService } from '../place-service';
 import { Place } from '../../models/place.model';
+import { CommentsComponent } from "../comment/comment";
+import { CommentFormComponent } from "../comment-form/comment-form";
 
 @Component({
   selector: 'app-place-page',
   standalone: true,
-  imports: [CommonModule, HttpClientModule, DatePipe],
+  imports: [CommonModule, HttpClientModule, DatePipe, CommentsComponent, CommentFormComponent],
   templateUrl: './place-page.html',
   styleUrls: ['./place-page.scss']
 })

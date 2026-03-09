@@ -1,10 +1,10 @@
 <div class="page-container placeform-page">
   <h1 class="page-header">Place Form</h1>
 
-  <form class="form" [formGroup]="placeForm">
+  <form class="form" [formGroup]="placeForm" (ngSubmit)="handleSubmit()">
     <label>
       Place Name
-      <input formControlName="placeName" />
+      <input formControlName="name" />
     </label>
 
     <label>
@@ -56,7 +56,7 @@
 
     <label>
       Logo
-      <input formControlName="logo" />
+      <input formControlName="img" />
     </label>
 
     <label>
@@ -78,33 +78,25 @@
 
     <label> Description </label>
 
-    <input id="send" type="submit" value="Send" (click)="handleSubmit($event)" />
+    <button type="submit">Send</button>
   </form>
 </div>
 
-<div class="modal-overlay" *ngIf="showConfirmationModal">
-  <div class="modal-content">
+<div class="modal-overlay" *ngIf="showConfirmationModal" (click)="closeModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
     <h2>Place Added Successfully!</h2>
     <p>Place has been added.</p>
-    <p>Place Name:</p>
+
     <div class="modal-place-info">
-      <p><b>Name:</b> {{ infoAboutCurrentPlace.placeName }}</p>
+      <p><b>Name:</b> {{ infoAboutCurrentPlace.name }}</p>
       <p>
-        <b>Address:</b> {{ infoAboutCurrentPlace.city }}, {{ infoAboutCurrentPlace.street }},
-        {{ infoAboutCurrentPlace.houseNo }}, {{ infoAboutCurrentPlace.postalCode }}
+        <b>Address:</b> {{ infoAboutCurrentPlace.city }},
+        {{ infoAboutCurrentPlace.street }},
+        {{ infoAboutCurrentPlace.houseNo }},
+        {{ infoAboutCurrentPlace.postalCode }}
       </p>
-      <p><b>District:</b> {{ infoAboutCurrentPlace.district }}</p>
-      <p><b>Category:</b> {{ infoAboutCurrentPlace.category }}</p>
-      <p *ngIf="infoAboutCurrentPlace.shortDescription">
-        <b>Description:</b> {{ infoAboutCurrentPlace.shortDescription }}
-      </p>
-      <img
-        *ngIf="infoAboutCurrentPlace.logo"
-        [src]="infoAboutCurrentPlace.logo"
-        alt="{{ infoAboutCurrentPlace.placeName }}"
-        class="modal-logo"
-      />
     </div>
+
     <button (click)="addPlace()">Add Place</button>
     <button (click)="closeModal()">Close</button>
   </div>

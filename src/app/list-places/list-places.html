@@ -1,92 +1,83 @@
-<div class="page-container">
-  <h1 class="page-header">Places List</h1>
+<ng-container *ngIf="!(loading$ | async); else loader">
+  <div class="page-container">
+    <h1 class="page-header">Places List</h1>
 
-  <div class="filter">
-    <form class="filters-form" [formGroup]="filterForm">
-      <label>
-        District
-        <select formControlName="district">
-          <option value="Bałuty">Bałuty</option>
-          <option value="Śródmieście">Śródmieście</option>
-          <option value="Widzew">Widzew</option>
-          <option value="Polesie">Polesie</option>
-          <option value="Górna">Górna</option>
-          <option value="inna">Other</option>
-        </select>
-      </label>
+    <div class="filter">
+      <form class="filters-form" [formGroup]="filterForm">
+        <label>
+          District
+          <select formControlName="district">
+            <option value="">All</option>
+            <option value="Bałuty">Bałuty</option>
+            <option value="Śródmieście">Śródmieście</option>
+            <option value="Widzew">Widzew</option>
+            <option value="Polesie">Polesie</option>
+            <option value="Górna">Górna</option>
+            <option value="inna">Other</option>
+          </select>
+        </label>
 
-      <label>
-        Category
-        <select formControlName="category">
-          <option value="children">{{ 'Children' }}</option>
-          <option value="animals">{{ 'Animals' }}</option>
-          <option value="invalids">{{ 'Invalids' }}</option>
-          <option value="addictions">{{ 'Addictions' }}</option>
-          <option value="retirees">{{ 'Retirees' }}</option>
-          <option value="others">{{ 'Others' }}</option>
-        </select>
-      </label>
+        <label>
+          Category
+          <select formControlName="category">
+            <option value="">All</option>
+            <option value="children">Children</option>
+            <option value="animals">Animals</option>
+            <option value="invalids">Invalids</option>
+            <option value="addictions">Addictions</option>
+            <option value="retirees">Retirees</option>
+            <option value="others">Others</option>
+          </select>
+        </label>
 
-      <label>
-        Sort
-        <select formControlName="sort">
-          <option value="newest">{{ 'Newest' }}</option>
-          <option value="oldest">{{ 'Oldest' }}</option>
-        </select>
-      </label>
+        <label>
+          Sort
+          <select formControlName="sort">
+            <option value="newest">Newest</option>
+            <option value="oldest">Oldest</option>
+          </select>
+        </label>
 
-      <label>
-        Search
-        <input type="text" formControlName="searchName" />
-      </label>
-    </form>
-  </div>
-
-  <div *ngFor="let place of paginatedPlaces" class="place-list-item">
-    <div>
-      <a [routerLink]="['/place', place._id]">
-        <img class="place-img" [src]="place.img" alt="place-img" width="100" height="100" />
-      </a>
+        <label>
+          Search
+          <input type="text" formControlName="searchName" />
+        </label>
+      </form>
     </div>
 
-    <div class="place-name">
-      <h4>
-        <a [routerLink]="['/place', place._id]">{{ place.name }}</a>
-      </h4>
+    <div *ngFor="let place of paginatedPlaces" class="place-list-item">
+      <div>
+        <a [routerLink]="['/place', place._id]">
+          <img class="place-img" [src]="place.img" alt="place-img" width="100" height="100" />
+        </a>
+      </div>
+      <div class="place-name">
+        <h4><a [routerLink]="['/place', place._id]">{{ place.name }}</a></h4>
+      </div>
+      <div class="place-address">
+        <h5>{{ place.city }}, {{ place.street }} {{ place.houseNo }}, {{ place.postalCode }}</h5>
+      </div>
+      <div class="place-category"><p><b>Category:</b> {{ place.category }}</p></div>
+      <div class="place-district"><p><b>District:</b> {{ place.district }}</p></div>
+      <div class="place-date"><p><b>Date:</b> {{ place.date | date: 'yyyy-MM-dd HH:mm:ss' }}</p></div>
+      <div class="short-description">
+        <p><b>Description:</b></p>
+        <p>{{ place.shortDescription }}</p>
+      </div>
     </div>
 
-    <div class="place-address">
-      <h5>{{ place.city }}, {{ place.street }}, {{ place.houseNo }}, {{ place.postalCode }}</h5>
-    </div>
 
-    <div class="place-category">
-      <p><b>Category</b> {{ place.category }}</p>
-    </div>
-
-    <div class="place-district">
-      <p><b>'District'</b> {{ place.district }}</p>
-    </div>
-
-    <div class="place-date">
-      <p><b>'Date'</b> {{ place.date | date: 'yyyy-MM-dd HH:mm:ss' }}</p>
-    </div>
-
-    <div class="short-description">
-      <p>
-        <b>'Description'</b>
-      </p>
-      <p>{{ place.shortDescription }}</p>
+    <div class="pagination" *ngIf="totalPages > 1">
+      <button *ngFor="let page of [].constructor(totalPages); let i = index"
+              (click)="paginate(i + 1)"
+              [disabled]="currentPage === i + 1"
+              [class.active]="currentPage === i + 1">
+        {{ i + 1 }}
+      </button>
     </div>
   </div>
-</div>
+</ng-container>
 
-<div class="pagination">
-  <button
-    *ngFor="let page of [].constructor(totalPages); let i = index"
-    (click)="paginate(i + 1)"
-    [disabled]="currentPage === i + 1"
-    [class.active]="currentPage === i + 1"
-  >
-    {{ i + 1 }}
-  </button>
-</div>
+<ng-template #loader>
+  <app-loader></app-loader>
+</ng-template>

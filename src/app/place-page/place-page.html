@@ -36,8 +36,12 @@
       <div [innerHTML]="p.shortDescription"></div>
     </div>
   </div>
+
+<app-comments #commentsComp [placeId]="+p._id"></app-comments>
+<app-comment-form [placeId]="+p._id" (commentAdded)="commentsComp.refresh()"></app-comment-form>
 </div>
 
 <ng-template #loading>
   <p>Loading...</p>
 </ng-template>
+

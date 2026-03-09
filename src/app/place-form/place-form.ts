@@ -14,7 +14,8 @@ export class PlaceForm implements OnInit {
   placeForm!: FormGroup;
   description: string = '';
   smallMapOfPlace: string = 'Nie znaleziono lub wprowadzono nieprawidłowy adres';
-  latLng: { lat: number; lng: number } = { lat: 0, lng: 0 };
+  lat: number = 0;
+  lng: number = 0;
   statusPlace: string = 'draft';
   showPopUp: boolean = false;
   showConfirmationModal: boolean = false;
@@ -32,12 +33,12 @@ export class PlaceForm implements OnInit {
   constructor(
     private fb: FormBuilder,
     private sanitizer: DomSanitizer,
-    private placeService: PlaceService
+    private placeService: PlaceService,
   ) {}
 
   ngOnInit(): void {
     this.placeForm = this.fb.group({
-      placeName: [''],
+      name: [''],
       phone: [''],
       email: [''],
       webPage: [''],
@@ -47,44 +48,49 @@ export class PlaceForm implements OnInit {
       houseNo: [''],
       shortDescription: [''],
       category: ['inna'],
-      logo: [''],
+      img: [''],
       district: ['inna'],
     });
   }
 
   async getPlaceCoordinates() {
-    const city = this.placeForm.value.city;
-    const street = this.placeForm.value.street;
-    const houseNo = this.placeForm.value.houseNo;
-    const postalCode = this.placeForm.value.postalCode;
+    const { city, street, houseNo, postalCode } = this.placeForm.value;
 
-    const URL = `https://www.mapquestapi.com/geocoding/v1/address?key=dYvAAN5PGJqo3AiKXCtuUoJpy7LUhwNs&inFormat=kvp&outFormat=json&location=${city}+${street}+${houseNo}+${postalCode}&thumbMaps=true&maxResults=1`;
+    const address = `${street} ${houseNo}, ${city} ${postalCode}`;
 
-    const apiRES = await fetch(URL).then((res) => res.json());
-    const location = apiRES.results[0]?.locations[0];
-    if (location) {
-      this.smallMapOfPlace = location.mapUrl;
-      this.latLng = location.latLng;
+    const URL = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`;
+
+    const res = await fetch(URL, {
+      headers: {
+        Accept: 'application/json',
+      },
+    });
+
+    const data = await res.json();
+    console.log(data, 'data');
+
+    if (data.length > 0) {
+      this.lat = parseFloat(data[0].lat);
+      this.lng = parseFloat(data[0].lon);
+      console.log(this.lat, this.lng, 'LATLNG');
+
+      this.smallMapOfPlace = data[0].display_name;
     }
   }
-
-  handleSubmit(event: Event) {
-  event.preventDefault();
-  // const isValidated = validationPlaceForm(...);
-
-  // if (isValidated === true) {
-    this.getPlaceCoordinates();
+  
+  async handleSubmit() {
     this.statusPlace = 'pending';
-    this.showPopUp = true;
     this.showConfirmationModal = true;
-  // }
-}
+
+    await this.getPlaceCoordinates();
+  }
 
   get infoAboutCurrentPlace() {
     return {
       ...this.placeForm.value,
       description: this.description,
-      latLng: this.latLng,
+      lat: this.lat,
+      lng: this.lng,
       smallMapOfPlace: this.smallMapOfPlace,
       statusPlace: this.statusPlace,
     };
@@ -94,16 +100,16 @@ export class PlaceForm implements OnInit {
     this.showConfirmationModal = false;
   }
   addPlace() {
-  const place = this.infoAboutCurrentPlace;
+    const place = this.infoAboutCurrentPlace;
 
-  this.placeService.postPlace(place).subscribe({
-    next: (res) => {
-      console.log('Place added', res);
-      this.closeModal();
-    },
-    error: (err) => {
-      console.error('Error adding place', err);
-    }
-  });
-}
+    this.placeService.postPlace(place).subscribe({
+      next: (res) => {
+        console.log('Place added', res);
+        this.closeModal();
+      },
+      error: (err) => {
+        console.error('Error adding place', err);
+      },
+    });
+  }
 }

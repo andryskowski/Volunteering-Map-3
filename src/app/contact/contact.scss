@@ -1,0 +1,76 @@
+.contact-page {
+  background-image: url("../../assets/people-contact-page-3.png");
+  background-repeat: no-repeat;
+  background-position: right top;
+  background-size: contain;
+  font-family: Arial, sans-serif;
+
+  .form-contact {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 500px;
+
+    border-radius: 12px;
+
+    label {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 20px;
+      font-weight: 500;
+      color: #333;
+
+      input,
+      textarea {
+        margin-top: 8px;
+        padding: 10px 12px;
+        font-size: 1em;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        transition: all 0.2s;
+        font-family: inherit;
+      }
+
+      input:focus,
+      textarea:focus {
+        border-color: #1a73e8;
+        box-shadow: 0 0 5px rgba(26, 115, 232, 0.3);
+        outline: none;
+      }
+
+      textarea {
+        resize: vertical;
+        min-height: 120px;
+        font-size: 1.1em;
+      }
+    }
+
+    button[type='submit'] {
+      margin-top: 15px;
+      padding: 12px 25px;
+      font-size: 1em;
+      font-weight: bold;
+      color: #fff;
+      background-color: #1a73e8;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      align-self: flex-start;
+
+      &:hover {
+        background-color: #155ab6;
+      }
+
+      &:active {
+        transform: scale(0.98);
+      }
+    }
+  }
+
+  .contact-header-2 {
+    color: navy;
+    margin-bottom: 25px;
+    font-size: 1.2em;
+  }
+}
