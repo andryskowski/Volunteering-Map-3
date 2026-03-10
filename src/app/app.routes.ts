@@ -4,16 +4,25 @@ import { MainPage } from './main-page/main-page';
 import { ListPlaces } from './list-places/list-places';
 import { PlacePage } from './place-page/place-page';
 import { PlaceForm } from './place-form/place-form';
-import { UserPanel } from './users-panel/users-panel';
+import { UsersPanel } from './users-panel/users-panel';
 import { Auth } from './auth/auth';
+import { UserInfoComponent } from './user-info/user-info';
+import { CommentsPanel } from './comments-panel/comments-panel';
+import { EntityPanelComponent } from './entity-panel/entity-panel';
+import { LandingPage } from './landing-page/landing-page';
+import { PlacesPanel } from './places-panel/places-panel';
 
 export const routes: Routes = [
-  { path: '', component: MainPage },
+  { path: '', component: LandingPage },
   { path: 'contact', component: Contact },
   { path: 'listplaces', component: ListPlaces },
   { path: 'place/:id', component: PlacePage },
   { path: 'place-form', component: PlaceForm},
-  { path: 'users-panel', component: UserPanel},
+  { path: 'users-panel', component: UsersPanel},
   { path: 'auth', component: Auth},
+  { path: 'user-info', component: UserInfoComponent},
+  { path: 'comments-panel', component: CommentsPanel},
+  { path: 'places-panel', component: PlacesPanel},
+  { path: 'map', component: MainPage},
   { path: '**', redirectTo: '', pathMatch: 'full' }, 
 ];

@@ -1,0 +1,24 @@
+<div class="landing-page">
+  <h3 class="small-header-vm">Volunteering Map</h3>
+  <div class="landing-page-text" *ngIf="!showAuth">
+    <img src="assets/pin.png" class="pin" alt="pin-image" width="40" height="40" />
+    <h1>Volunteering Map</h1>
+    <p>
+      Looking for a place where you could spend wonderful moments, meet new people, and at the same
+      time help others? <b>You’ve come to the right place!</b>
+    </p>
+    <p><b>Volunteering Map</b> will help you find a place that is looking for volunteers.</p>
+    <button (click)="openAuth()">Start!</button>
+  </div>
+
+  <img class="left-img" src="assets/image5.png" alt="image left" width="733" height="970"/>
+  <img class="right-img" src="assets/group_image.svg" alt="image right" width="887" height="1024" />
+
+  <div class="flex-container-1">
+    <img src="assets/Group_48.png" alt="image left" />
+    <img src="assets/image_3.png" alt="image right" />
+
+    <button (click)="openAuth()">Log in</button>
+  </div>
+  <app-auth *ngIf="showAuth"></app-auth>
+</div>

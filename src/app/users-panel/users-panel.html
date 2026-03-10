@@ -1,1 +1,5 @@
-<p>users-panel works!</p>
+<app-entity-panel
+  title="Users"
+  [fetchFn]="userService.getUsers.bind(userService)"
+  [deleteFn]="userService.deleteUser.bind(userService)"
+></app-entity-panel>

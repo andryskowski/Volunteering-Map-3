@@ -1,2 +1,4 @@
-<app-navbar></app-navbar>
+<app-navbar *ngIf="!hideNavbar"></app-navbar>
+<app-loader></app-loader>
 <router-outlet></router-outlet>
+<app-modal></app-modal>

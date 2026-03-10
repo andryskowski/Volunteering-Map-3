@@ -1,0 +1,93 @@
+:host {
+  display: block;
+  height: 100vh; 
+  overflow: hidden;
+  background-color: #f2f7ff;
+}
+
+.landing-page {
+  position: relative;
+  display: flex;
+  padding-top: 50px;
+  align-items: center;
+  background-color: #f2f7ff;
+
+}
+
+img {
+  display: block;
+}
+
+.landing-page-text {
+  position: absolute;
+  left: 15%;
+  top: 45%;
+  transform: translateY(-50%);
+  width: 550px;
+  z-index: 2;
+  font-size: 20px;
+}
+
+.small-header-vm {
+  position: absolute;
+  left: 9%;
+  top: 2%;
+}
+
+button {
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    color: navy;
+    margin-top: 15px;
+    background-color: #EDA6C3;
+    border-radius: 20px;
+    width: 150px;
+    height: 45px;
+    border-color: inherit;
+    box-shadow: none;
+    box-shadow: none !important;
+    outline: none;
+}
+
+button:hover,
+button:focus,
+button:active {
+  box-shadow: none;
+  outline: none;
+}
+
+.pin {
+    position: absolute;
+    left: 90%;
+    top: 0;
+}
+
+.flex-container-1 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: absolute;
+  top: 20px;
+  right: 40px;
+
+  img {
+    padding: 0 10px;
+    width: 60px;
+    height: 60px;
+  }
+
+  button {
+    margin-top: 0;
+  }
+}
+
+.right-img {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+
+.left-img {
+  z-index: 1;
+}

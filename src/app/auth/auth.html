@@ -3,10 +3,10 @@
 
   <form [formGroup]="authForm" (ngSubmit)="onSubmit()">
 
-    <label>Email:</label>
-    <input type="email" formControlName="email">
-    <div *ngIf="authForm.get('email')?.invalid && authForm.get('email')?.touched" class="error">
-      Please enter a valid email
+    <label>Login:</label>
+    <input type="text" formControlName="login">
+    <div *ngIf="authForm.get('login')?.invalid && authForm.get('login')?.touched" class="error">
+      Please enter a login
     </div>
 
     <label>Password:</label>
@@ -21,6 +21,15 @@
       <div *ngIf="authForm.get('confirmPassword')?.invalid && authForm.get('confirmPassword')?.touched" class="error">
         This field is required
       </div>
+
+      <label>Email:</label>
+      <input type="email" formControlName="email">
+      <div *ngIf="authForm.get('email')?.invalid && authForm.get('email')?.touched" class="error">
+        Please enter a valid email
+      </div>
+
+      <label>Avatar URL:</label>
+      <input type="text" formControlName="avatarUrl">
     </div>
 
     <button type="submit">{{ isLoginMode ? 'Login' : 'Register' }}</button>

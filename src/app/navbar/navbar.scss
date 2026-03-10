@@ -1,129 +1,137 @@
-.background-x-navbar{
-    // background-image: url("../../assets/x_icon.svg") !important;
-    font-size: 2em !important;
+.background-x-navbar {
+  // background-image: url("../../assets/x_icon.svg") !important;
+  font-size: 2em !important;
 }
 
-.accessible-interface-navbar{
+.accessible-interface-navbar {
+  font-size: 1.2em;
+  color: white !important;
+  background-color: navy !important;
+  @media only screen and (max-width: 1400px) {
     font-size: 1.2em;
-    color: white !important;
-    background-color: navy !important;
-    @media only screen and (max-width: 1400px) {
-        font-size: 1.2em;
-    }
+  }
 }
 
-.navbar{
-    background-color: #03396c;
-    color: white;
-    width: 100vw;
-    .navbar-list{
-        margin: 0;
-        display: flex;
-        li{
-            padding: 10px 15px;
-            list-style-type: none;
-            color: #d0efff;
-        }
-        li:hover{
-            color: #6497b1;
+.navbar {
+  background-color: #03396c;
+  color: white;
+  width: 100vw;
+  min-height: 48px;
+  display: flex;
+  .navbar-list {
+    
+    display: flex;
+    align-items: center;
+    margin: 0;
+    display: flex;
+    li {
+      padding: 5px 10px;
+      list-style-type: none;
+      color: #d0efff;
+    }
+    li:hover {
+      color: #6497b1;
+    }
 
-        }
+    img {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
     }
-    .small-profilephoto-container{
-        margin-top: 5px;
+  }
+  .small-profilephoto-container {
+    margin-top: 5px;
+  }
+  & > * {
+    cursor: pointer;
+  }
+  .button-x-navbar-conainer {
+    display: none;
+    .button-x-navbar {
+      // background-image: url("../../assets/burger_icon.svg");
+      color: inherit;
+      width: 32px;
+      height: 32px;
     }
-    & > * {
-        cursor: pointer;
-    }
-    .button-x-navbar-conainer{
-    display: none; 
-    .button-x-navbar{
-        // background-image: url("../../assets/burger_icon.svg");
-        color: inherit;
-        width: 32px;
-        height: 32px;
-    }
-    }
-    a:link {
-        text-decoration: none;
-      }
-      
-    a:visited {
-        text-decoration: none;
-    }
+  }
+  a:link {
+    text-decoration: none;
+  }
+
+  a:visited {
+    text-decoration: none;
+  }
 }
 
 @media only screen and (max-width: 1400px) {
-    .navbar{
-        font-size: 0.8em;
-        .navbar-list{
-            li{
-                padding: 10px 10px;
-            }
-        }
+  .navbar {
+    font-size: 0.8em;
+    .navbar-list {
+      li {
+        // padding: 10px 10px;
+      }
     }
+  }
 }
 
 @media only screen and (max-width: 1300px) {
-    .navbar{
-        font-size: 0.8em;
-        .navbar-list{
-            li{
-                padding: 10px 8px;
-            }
-        }
+  .navbar {
+    font-size: 0.8em;
+    .navbar-list {
+      li {
+        // padding: 10px 8px;
+      }
     }
+  }
 }
-
 
 @media only screen and (max-width: 1100px) {
-    .navbar{
-        .navbar-list{
-            li{
-                padding: 10px 8px;
-            }
-        }
+  .navbar {
+    .navbar-list {
+      li {
+        padding: 10px 8px;
+      }
     }
+  }
 }
 
-
 @media only screen and (max-width: 1024px) {
-    .navbar{
-        font-size: 0.6em;
-        .navbar-list{
-            li{
-                padding: 10px 4px;
-            }
-        }
+  .navbar {
+    font-size: 0.6em;
+    .navbar-list {
+      li {
+        padding: 10px 4px;
+      }
     }
+  }
 }
 
 @media only screen and (max-width: 768px) {
-    .navbar{
-        font-size: 0.8em;
-        .navbar-list{
-            display: none;
-            flex-direction: column;
-            li{
-                padding: 10px 20px;
-            }
-        }
-        .small-profilephoto-container{
-            display: none;
-        }
-        .button-x-navbar-conainer{
-            display: flex;
-            justify-content: flex-end;
-
-        .button-x-navbar{
-            background-color: inherit;
-            border: none;
-            font-size: 1.5em;
-            margin-right:  50px;
-            content: "";
-        }
-        }
+  .navbar {
+    font-size: 0.8em;
+    .navbar-list {
+      display: none;
+      flex-direction: column;
+      li {
+        padding: 10px 20px;
+      }
     }
+    .small-profilephoto-container {
+      display: none;
+    }
+    .button-x-navbar-conainer {
+      display: flex;
+      justify-content: flex-end;
+
+      .button-x-navbar {
+        background-color: inherit;
+        border: none;
+        font-size: 1.5em;
+        margin-right: 50px;
+        content: '';
+      }
+    }
+  }
 }
 
 a {

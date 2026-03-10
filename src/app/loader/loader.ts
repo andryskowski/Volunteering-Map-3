@@ -1,12 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { LoaderService } from '../loader-service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-loader',
   standalone: true,
   imports: [CommonModule],
   template: `
-    <div class="loader-overlay">
+    <div class="loader-overlay" *ngIf="loading$ | async">
       <div class="spinner"></div>
     </div>
   `,
@@ -37,4 +39,11 @@ import { CommonModule } from '@angular/common';
     }
   `]
 })
-export class LoaderComponent {}
+export class LoaderComponent implements OnInit {
+  loading$!: Observable<boolean>;
+  constructor(private loaderService: LoaderService) {}
+
+  ngOnInit(): void {
+    this.loading$ = this.loaderService.loading$;
+  }
+}

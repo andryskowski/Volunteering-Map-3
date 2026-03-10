@@ -26,7 +26,7 @@ export class PlacePage {
     this.place$ = this.route.paramMap.pipe(
       switchMap(params => {
         const id = params.get('id')!;
-        return this.placeService.getPlaceById(id);
+        return this.placeService.getPlaceById(Number(id));
       })
     );
   }
