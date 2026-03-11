@@ -6,13 +6,14 @@ import { BehaviorSubject, finalize } from 'rxjs';
 import { PlaceService } from '../place-service';
 import { LoaderComponent } from '../loader/loader';
 import { Place } from '../../models/place.model';
+import { PaginationComponent } from "../pagination/pagination";
 
 @Component({
   selector: 'app-list-places',
   templateUrl: './list-places.html',
   styleUrls: ['./list-places.scss'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule, LoaderComponent, DatePipe],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, LoaderComponent, DatePipe, PaginationComponent],
 })
 export class ListPlaces implements OnInit {
   places: Place[] = [];

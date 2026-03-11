@@ -8,21 +8,23 @@ import { UsersPanel } from './users-panel/users-panel';
 import { Auth } from './auth/auth';
 import { UserInfoComponent } from './user-info/user-info';
 import { CommentsPanel } from './comments-panel/comments-panel';
-import { EntityPanelComponent } from './entity-panel/entity-panel';
 import { LandingPage } from './landing-page/landing-page';
 import { PlacesPanel } from './places-panel/places-panel';
+import { NotFoundComponent } from './pages/not-found/not-found';
 
 export const routes: Routes = [
   { path: '', component: LandingPage },
+
   { path: 'contact', component: Contact },
   { path: 'listplaces', component: ListPlaces },
   { path: 'place/:id', component: PlacePage },
-  { path: 'place-form', component: PlaceForm},
-  { path: 'users-panel', component: UsersPanel},
-  { path: 'auth', component: Auth},
-  { path: 'user-info', component: UserInfoComponent},
-  { path: 'comments-panel', component: CommentsPanel},
-  { path: 'places-panel', component: PlacesPanel},
-  { path: 'map', component: MainPage},
-  { path: '**', redirectTo: '', pathMatch: 'full' }, 
+  { path: 'place-form', component: PlaceForm },
+  { path: 'users-panel', component: UsersPanel },
+  { path: 'auth', component: Auth },
+  { path: 'user-info/:id', component: UserInfoComponent },
+  { path: 'comments-panel', component: CommentsPanel },
+  { path: 'places-panel', component: PlacesPanel },
+  { path: 'map', component: MainPage },
+  { path: '404', component: NotFoundComponent },
+  { path: '**', redirectTo: '/404' }
 ];

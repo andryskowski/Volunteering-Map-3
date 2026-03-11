@@ -130,10 +130,10 @@ export class CommentFormComponent {
   @Input() placeId!: number;
   @Output() commentAdded = new EventEmitter<void>();
   userId: number | undefined;
-  showModal = false;
 
   comment: Comment = {
     placeId: 0,
+    userId: 0,
     subject: '',
     message: '',
   };
@@ -147,15 +147,20 @@ export class CommentFormComponent {
   }
 
   submitComment() {
-    if (!this.placeId) return;
+    if (!this.placeId || !this.userId) return;
 
     this.comment.placeId = this.placeId;
+    this.comment.userId = this.userId;
 
     this.commentService.addComment(this.comment).subscribe({
       next: () => {
-        this.comment = { placeId: this.placeId, userId: 0, subject: '', message: '' };
+        this.comment = {
+          placeId: this.placeId,
+          userId: this.userId,
+          subject: '',
+          message: '',
+        };
         this.commentAdded.emit();
-        this.showModal = true;
       },
       error: (err) => console.error('Error adding comment:', err),
     });

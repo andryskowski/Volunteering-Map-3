@@ -9,9 +9,13 @@
     <li><a routerLink="/places-panel" routerLinkActive="active"> Places Panel </a></li>
     <li (click)="logout()" *ngIf="currentUser?._id">Logout</li>
 
-    <li *ngIf="currentUser?.avatarUrl" class="navbar-avatar">
-      <a routerLink="/user-info">
-        <img [src]="currentUser?.avatarUrl" [alt]="currentUser?.login + ' avatar'" />
+    <li class="navbar-avatar" *ngIf="currentUser">
+      <a [routerLink]="['/user-info', currentUser._id]">
+        <img
+          [src]="currentUser.avatarUrl"
+          (error)="onAvatarError($event)"
+          [alt]="currentUser.login + ' avatar'"
+        />
       </a>
     </li>
   </ul>

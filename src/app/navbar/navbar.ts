@@ -13,6 +13,7 @@ import { ModalService } from '../modal-service';
 })
 export class Navbar {
   currentUser: User | null = null;
+  defaultAvatar = 'https://cdn-icons-png.flaticon.com/512/8345/8345328.png';
 
   constructor(
     private authService: AuthService,
@@ -27,5 +28,10 @@ export class Navbar {
   logout() {
     this.authService.logout();
     this.router.navigate(['/']);
+  }
+
+  onAvatarError(event: Event) {
+    const imgElement = event.target as HTMLImageElement;
+    imgElement.src = this.defaultAvatar;
   }
 }

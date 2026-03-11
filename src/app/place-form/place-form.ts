@@ -1,6 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators
+} from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { PlaceService } from '../place-service';
 
@@ -12,44 +17,47 @@ import { PlaceService } from '../place-service';
 })
 export class PlaceForm implements OnInit {
   placeForm!: FormGroup;
+
   description: string = '';
   smallMapOfPlace: string = 'Nie znaleziono lub wprowadzono nieprawidłowy adres';
   lat: number = 0;
   lng: number = 0;
   statusPlace: string = 'draft';
+
   showPopUp: boolean = false;
   showConfirmationModal: boolean = false;
-
-  // modules: QuillModules = {
-  //   toolbar: [
-  //     ['bold', 'italic', 'underline', 'strike', 'blockquote', 'link', 'image', 'video'],
-  //     [{ color: ['#FF0000', '#001F3F', '#0074D9', '#7FDBFF',
-  //                 '#39CCCC', '#3D9970', '#2ECC40', '#01FF70',
-  //                 '#FFDC00', '#FF851B', '#FF4136', '#85144B',
-  //                 '#F012BE', '#B10DC9', '#111111', '#AAAAAA'] }],
-  //   ]
-  // };
 
   constructor(
     private fb: FormBuilder,
     private sanitizer: DomSanitizer,
-    private placeService: PlaceService,
+    private placeService: PlaceService
   ) {}
 
   ngOnInit(): void {
     this.placeForm = this.fb.group({
-      name: [''],
-      phone: [''],
-      email: [''],
-      webPage: [''],
-      city: [''],
-      street: [''],
-      postalCode: [''],
-      houseNo: [''],
-      shortDescription: [''],
-      category: ['inna'],
-      img: [''],
-      district: ['inna'],
+      name: ['', [Validators.required, Validators.minLength(3)]],
+
+      webPage: ['', [Validators.pattern(/https?:\/\/.+/)]],
+
+      email: ['', [Validators.email]],
+
+      phone: ['', [Validators.pattern(/^[0-9+\-\s]{7,15}$/)]],
+
+      city: ['', Validators.required],
+
+      street: ['', Validators.required],
+
+      houseNo: ['', Validators.required],
+
+      postalCode: ['', [Validators.required, Validators.pattern(/^\d{2}-\d{3}$/)]],
+
+      district: ['inna', Validators.required],
+
+      img: ['', [Validators.pattern(/https?:\/\/.+/)]],
+
+      category: ['inna', Validators.required],
+
+      shortDescription: ['', [Validators.required, Validators.maxLength(200)]],
     });
   }
 
@@ -61,24 +69,24 @@ export class PlaceForm implements OnInit {
     const URL = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`;
 
     const res = await fetch(URL, {
-      headers: {
-        Accept: 'application/json',
-      },
+      headers: { Accept: 'application/json' },
     });
 
     const data = await res.json();
-    console.log(data, 'data');
 
     if (data.length > 0) {
       this.lat = parseFloat(data[0].lat);
       this.lng = parseFloat(data[0].lon);
-      console.log(this.lat, this.lng, 'LATLNG');
-
       this.smallMapOfPlace = data[0].display_name;
     }
   }
-  
+
   async handleSubmit() {
+    if (this.placeForm.invalid) {
+      this.placeForm.markAllAsTouched();
+      return;
+    }
+
     this.statusPlace = 'pending';
     this.showConfirmationModal = true;
 
@@ -99,6 +107,7 @@ export class PlaceForm implements OnInit {
   closeModal() {
     this.showConfirmationModal = false;
   }
+
   addPlace() {
     const place = this.infoAboutCurrentPlace;
 
@@ -111,5 +120,9 @@ export class PlaceForm implements OnInit {
         console.error('Error adding place', err);
       },
     });
+  }
+
+  get f() {
+    return this.placeForm.controls;
   }
 }

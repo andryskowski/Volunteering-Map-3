@@ -94,7 +94,6 @@ export class EditEntityFormComponent implements OnChanges {
 
     this.submitFn(this.form.value).subscribe(() => {
       this.modalService.close();
-      window.location.reload();
     });
   }
 }

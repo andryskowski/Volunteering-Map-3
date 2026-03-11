@@ -8,8 +8,9 @@ export interface User {
   login: string;
   email: string;
   role: string;
-  password: string;
+  password?: string;
   createdAt: string;
+  avatarUrl?: string;
 }
 
 @Injectable({
@@ -22,13 +23,10 @@ export class UserService {
 
   private getAuthHeaders(): { headers: HttpHeaders } {
     const token = this.authService.getToken();
-    if (!token) {
-      console.warn('No JWT token available!');
-    }
     return {
       headers: new HttpHeaders({
-        'Authorization': `Bearer ${token}`
-      })
+        Authorization: `Bearer ${token}`,
+      }),
     };
   }
 
@@ -36,15 +34,15 @@ export class UserService {
     return this.http.get<User[]>(this.apiUrl, this.getAuthHeaders());
   }
 
+  getUserById(id: number): Observable<User> {
+    return this.http.get<User>(`${this.apiUrl}/${id}`, this.getAuthHeaders());
+  }
+
   deleteUser(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`, this.getAuthHeaders());
   }
 
   updateUser(id: number, updatedData: Partial<User>): Observable<User> {
-    return this.http.put<User>(
-      `${this.apiUrl}/${id}`,
-      updatedData,
-      this.getAuthHeaders()
-    );
+    return this.http.put<User>(`${this.apiUrl}/${id}`, updatedData, this.getAuthHeaders());
   }
 }

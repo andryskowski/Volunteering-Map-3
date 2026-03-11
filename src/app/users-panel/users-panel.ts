@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserService, User } from '../user-service';
 import { EntityPanelComponent } from '../entity-panel/entity-panel';
@@ -7,12 +7,14 @@ import { ModalService } from '../modal-service';
 import { EditEntityFormComponent } from '../edit-entity-form/edit-entity-form';
 import { Validators } from '@angular/forms';
 import { AuthService } from '../auth-service';
+import { ToastComponent } from '../toast/toast';
 
 @Component({
   selector: 'app-users-panel',
   standalone: true,
-  imports: [CommonModule, EntityPanelComponent],
+  imports: [CommonModule, EntityPanelComponent, ToastComponent],
   template: `
+    <app-toast></app-toast>
     <app-entity-panel
       [title]="'Users'"
       [entities]="users"
@@ -29,6 +31,7 @@ export class UsersPanel implements OnInit {
 
   private loadingSubject = new BehaviorSubject<boolean>(true);
   loading$ = this.loadingSubject.asObservable();
+  @ViewChild(ToastComponent) toast!: ToastComponent;
 
   constructor(
     private userService: UserService,
@@ -65,8 +68,14 @@ export class UsersPanel implements OnInit {
 
   deleteUserFn = (id: string | number) => {
     return this.userService.deleteUser(Number(id)).pipe(
-      finalize(() => {
-        this.fetchUsers();
+      tap({
+        next: () => {
+          this.fetchUsers();
+          this.toast.show('User removed successfully', 'success');
+        },
+        error: (err) => {
+          this.toast.show(err?.error?.message || 'Failed to remove user', 'error');
+        },
       }),
     );
   };
@@ -85,6 +94,7 @@ export class UsersPanel implements OnInit {
           tap(() => {
             if (this.authService.getCurrentUser()?._id === user._id) {
               this.authService.updateCurrentUser(updatedUser);
+              this.toast.show('User updated successfully', 'success');
             }
           }),
         ),

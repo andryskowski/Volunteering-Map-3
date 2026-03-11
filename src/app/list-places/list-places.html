@@ -52,29 +52,34 @@
         </a>
       </div>
       <div class="place-name">
-        <h4><a [routerLink]="['/place', place._id]">{{ place.name }}</a></h4>
+        <h4>
+          <a [routerLink]="['/place', place._id]">{{ place.name }}</a>
+        </h4>
       </div>
       <div class="place-address">
         <h5>{{ place.city }}, {{ place.street }} {{ place.houseNo }}, {{ place.postalCode }}</h5>
       </div>
-      <div class="place-category"><p><b>Category:</b> {{ place.category }}</p></div>
-      <div class="place-district"><p><b>District:</b> {{ place.district }}</p></div>
-      <div class="place-date"><p><b>Date:</b> {{ place.date | date: 'yyyy-MM-dd HH:mm:ss' }}</p></div>
+      <div class="place-category">
+        <p><b>Category:</b> {{ place.category }}</p>
+      </div>
+      <div class="place-district">
+        <p><b>District:</b> {{ place.district }}</p>
+      </div>
+      <div class="place-date">
+        <p><b>Date:</b> {{ place.date | date: 'yyyy-MM-dd HH:mm:ss' }}</p>
+      </div>
       <div class="short-description">
         <p><b>Description:</b></p>
         <p>{{ place.shortDescription }}</p>
       </div>
     </div>
 
-
-    <div class="pagination" *ngIf="totalPages > 1">
-      <button *ngFor="let page of [].constructor(totalPages); let i = index"
-              (click)="paginate(i + 1)"
-              [disabled]="currentPage === i + 1"
-              [class.active]="currentPage === i + 1">
-        {{ i + 1 }}
-      </button>
-    </div>
+    <app-pagination
+      [currentPage]="currentPage"
+      [totalPages]="totalPages"
+      (pageChange)="paginate($event)"
+    >
+    </app-pagination>
   </div>
 </ng-container>
 

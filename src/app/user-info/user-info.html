@@ -1,19 +1,23 @@
 <div class="page-container">
   <h1>User Info</h1>
-  <div *ngIf="currentUser" class="user-info">
-    <div *ngIf="currentUser.avatarUrl" class="avatar">
-      <img [src]="currentUser.avatarUrl" [alt]="currentUser.login + ' avatar'" />
+  <div *ngIf="user" class="user-info">
+    <div class="avatar">
+      <img
+        [src]="user.avatarUrl"
+        (error)="onAvatarError($event)"
+        [alt]="user.login + ' avatar'"
+      />
     </div>
 
     <ul>
-      <li><strong>Login:</strong> {{ currentUser.login }}</li>
-      <li><strong>Email:</strong> {{ currentUser.email }}</li>
-      <li><strong>Role:</strong> {{ currentUser.role }}</li>
-      <li><strong>Created At:</strong> {{ currentUser.createdAt | date: 'short' }}</li>
+      <li><strong>Login:</strong> {{ user.login }}</li>
+      <li><strong>Email:</strong> {{ user.email }}</li>
+      <li><strong>Role:</strong> {{ user.role }}</li>
+      <li><strong>Created At:</strong> {{ user.createdAt | date: 'short' }}</li>
     </ul>
   </div>
 
-  <div *ngIf="!currentUser">
+  <div *ngIf="!user">
     <p>User not logged in.</p>
   </div>
 </div>
