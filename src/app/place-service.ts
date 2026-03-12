@@ -45,9 +45,7 @@ export class PlaceService {
   updatePlace(id: number, data: any): Observable<Place> {
     return this.http
       .put<{ success: boolean; place: Place; message: string }>(`${this.apiUrl}/${id}`, data)
-      .pipe(
-        map((res) => res.place),
-      );
+      .pipe(map((res) => res.place));
   }
 
   deletePlace(id: number): Observable<{ success: boolean; message: string }> {

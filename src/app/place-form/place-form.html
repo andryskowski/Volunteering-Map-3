@@ -2,30 +2,25 @@
   <h1 class="page-header">Place Form</h1>
 
   <form class="form" [formGroup]="placeForm" (ngSubmit)="handleSubmit()">
-
     <label>
       Place Name
       <input formControlName="name" />
       <span class="error" *ngIf="f['name'].touched && f['name'].errors">
-        <span *ngIf="f['name'].errors?.['required']">Name is required</span>
-        <span *ngIf="f['name'].errors?.['minlength']">Minimum 3 characters</span>
+        <span *ngIf="f['name'].errors['required']">Name is required</span>
+        <span *ngIf="f['name'].errors['minlength']">Minimum 3 characters</span>
       </span>
     </label>
 
     <label>
       Web Page
       <input formControlName="webPage" />
-      <span class="error" *ngIf="f['webPage'].touched && f['webPage'].errors">
-        Invalid URL
-      </span>
+      <span class="error" *ngIf="f['webPage'].touched && f['webPage'].errors"> Invalid URL </span>
     </label>
 
     <label>
       Email
       <input formControlName="email" />
-      <span class="error" *ngIf="f['email'].touched && f['email'].errors">
-        Invalid email
-      </span>
+      <span class="error" *ngIf="f['email'].touched && f['email'].errors"> Invalid email </span>
     </label>
 
     <label>
@@ -39,9 +34,7 @@
     <label>
       City
       <input formControlName="city" />
-      <span class="error" *ngIf="f['city'].touched && f['city'].errors">
-        City is required
-      </span>
+      <span class="error" *ngIf="f['city'].touched && f['city'].errors"> City is required </span>
     </label>
 
     <label>
@@ -105,11 +98,7 @@
       </span>
     </label>
 
-    <label>Description</label>
-
-    <button type="submit" [disabled]="placeForm.invalid">
-      Send
-    </button>
+    <button type="submit" [disabled]="placeForm.invalid">Send</button>
   </form>
 </div>
 
@@ -121,8 +110,7 @@
       <p><b>Name:</b> {{ infoAboutCurrentPlace.name }}</p>
       <p>
         <b>Address:</b>
-        {{ infoAboutCurrentPlace.city }},
-        {{ infoAboutCurrentPlace.street }},
+        {{ infoAboutCurrentPlace.city }}, {{ infoAboutCurrentPlace.street }},
         {{ infoAboutCurrentPlace.houseNo }},
         {{ infoAboutCurrentPlace.postalCode }}
       </p>

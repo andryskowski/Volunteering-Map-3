@@ -11,7 +11,6 @@ import { filter } from 'rxjs';
   standalone: true,
   imports: [RouterOutlet, Navbar, LoaderComponent, ModalComponent, CommonModule],
   templateUrl: './app.html',
-  styleUrl: './app.scss',
 })
 export class App {
   protected readonly title = signal('Volunteering-Map-3');

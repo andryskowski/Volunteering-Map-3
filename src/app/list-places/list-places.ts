@@ -6,14 +6,21 @@ import { BehaviorSubject, finalize } from 'rxjs';
 import { PlaceService } from '../place-service';
 import { LoaderComponent } from '../loader/loader';
 import { Place } from '../../models/place.model';
-import { PaginationComponent } from "../pagination/pagination";
+import { PaginationComponent } from '../pagination/pagination';
 
 @Component({
   selector: 'app-list-places',
   templateUrl: './list-places.html',
   styleUrls: ['./list-places.scss'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule, LoaderComponent, DatePipe, PaginationComponent],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    RouterModule,
+    LoaderComponent,
+    DatePipe,
+    PaginationComponent,
+  ],
 })
 export class ListPlaces implements OnInit {
   places: Place[] = [];
@@ -27,7 +34,10 @@ export class ListPlaces implements OnInit {
   private loadingSubject = new BehaviorSubject<boolean>(true);
   loading$ = this.loadingSubject.asObservable();
 
-  constructor(private fb: FormBuilder, private placeService: PlaceService) {
+  constructor(
+    private fb: FormBuilder,
+    private placeService: PlaceService,
+  ) {
     this.filterForm = this.fb.group({
       district: [''],
       category: [''],
@@ -48,11 +58,12 @@ export class ListPlaces implements OnInit {
   fetchPlaces(): void {
     this.loadingSubject.next(true);
 
-    this.placeService.loadPlaces()
+    this.placeService
+      .loadPlaces()
       .pipe(finalize(() => this.loadingSubject.next(false)))
       .subscribe({
         next: (data) => {
-          this.places = data.map(p => ({ ...p, date: new Date(p.date) }));
+          this.places = data.map((p) => ({ ...p, date: new Date(p.date) }));
           this.applyFilters();
         },
         error: (err) => {
@@ -60,14 +71,14 @@ export class ListPlaces implements OnInit {
           this.places = [];
           this.filteredPlaces = [];
           this.paginatedPlaces = [];
-        }
+        },
       });
   }
 
   applyFilters(): void {
     const { district, category, searchName, sort } = this.filterForm.value;
 
-    this.filteredPlaces = this.places.filter(place => {
+    this.filteredPlaces = this.places.filter((place) => {
       let match = true;
       if (district) match = match && place.district === district;
       if (category) match = match && place.category === category;

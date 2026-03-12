@@ -14,5 +14,4 @@ export class LandingPage {
   openAuth() {
     this.showAuth = true;
   }
-
 }

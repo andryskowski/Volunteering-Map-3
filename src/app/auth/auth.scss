@@ -1,9 +1,9 @@
 .auth-container {
-  width: 350px;                  /* trochę szerszy dla komfortu */
-  position: fixed;               /* lepsze niż absolute dla modala */
+  width: 350px;
+  position: fixed;
   top: 45%;
   left: 25%;
-  transform: translate(-50%, -50%); /* wyśrodkowanie pionowo i poziomo */
+  transform: translate(-50%, -50%);
   padding: 30px 25px;
   border-radius: 12px;
   z-index: 1000;
@@ -29,7 +29,7 @@
 
   input:focus {
     outline: none;
-    border-color: #EDA6C3; /* pasuje do buttona */
+    border-color: #eda6c3;
     box-shadow: 0 0 5px rgba(237, 166, 195, 0.5);
   }
 
@@ -43,7 +43,7 @@
     margin-top: 20px;
     width: 100%;
     padding: 12px;
-    background-color: #EDA6C3;
+    background-color: #eda6c3;
     color: navy;
     border: none;
     border-radius: 20px;

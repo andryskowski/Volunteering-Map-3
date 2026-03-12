@@ -21,36 +21,49 @@ type ToastType = 'success' | 'info' | 'error';
       <span class="message">{{ message }}</span>
     </div>
   `,
-  styles: [`
-    .toast {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      padding: 14px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      color: white;
-      font-weight: 500;
-      z-index: 9999;
-      animation: slideDown .35s ease;
-      box-shadow: 0 6px 16px rgba(0,0,0,0.15);
-    }
+  styles: [
+    `
+      .toast {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        padding: 14px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        color: white;
+        font-weight: 500;
+        z-index: 9999;
+        animation: slideDown 0.35s ease;
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+      }
 
-    .success { background:#22c55e; }
-    .info { background:#3b82f6; }
-    .error { background:#ef4444; }
+      .success {
+        background: #22c55e;
+      }
+      .info {
+        background: #3b82f6;
+      }
+      .error {
+        background: #ef4444;
+      }
 
-    @keyframes slideDown {
-      from { transform: translateY(-60px); opacity:0 }
-      to { transform: translateY(0); opacity:1 }
-    }
-  `]
+      @keyframes slideDown {
+        from {
+          transform: translateY(-60px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+    `,
+  ],
 })
 export class ToastComponent {
-
   visible = false;
   message = '';
   type: ToastType = 'info';
@@ -60,7 +73,6 @@ export class ToastComponent {
   constructor(private cdr: ChangeDetectorRef) {}
 
   show(message: string, type: ToastType = 'info', duration = 2000) {
-
     clearTimeout(this.timer);
 
     this.message = message;

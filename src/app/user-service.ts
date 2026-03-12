@@ -19,7 +19,10 @@ export interface User {
 export class UserService {
   private apiUrl = 'http://localhost:8080/users';
 
-  constructor(private http: HttpClient, private authService: AuthService) {}
+  constructor(
+    private http: HttpClient,
+    private authService: AuthService,
+  ) {}
 
   private getAuthHeaders(): { headers: HttpHeaders } {
     const token = this.authService.getToken();

@@ -49,7 +49,6 @@ import { AuthService } from '../auth-service';
         </button>
       </form>
     </div>
-
   `,
   styles: [
     `

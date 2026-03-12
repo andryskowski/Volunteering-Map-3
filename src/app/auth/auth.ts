@@ -52,14 +52,12 @@ export class Auth {
     if (this.isLoginMode) {
       this.authService.login(login, password).subscribe({
         next: (res) => {
-          console.log('Login successful, token:', res.token);
-          // this.modalService.open('Success', 'Login successful');
+          this.modalService.open('Success', 'Login successful');
           this.authForm.reset();
           this.router.navigate(['/map']);
         },
         error: (err) => {
-          console.error('Login failed:', err.message);
-          this.modalService.open('Error', err.message);
+          this.modalService.open('Error', err.message || 'Login failed');
         },
       });
     } else {
@@ -70,13 +68,12 @@ export class Auth {
 
       this.authService.register(login, password, email, avatarUrl).subscribe({
         next: (res) => {
-          console.log('Registered successfully, token:', res.token);
-          this.modalService.open('Success', 'Registration successful!');
+          this.modalService.open('Success', 'Registration successful! Logging in...');
           this.authForm.reset();
           this.isLoginMode = true;
+          this.router.navigate(['/map']);
         },
         error: (err) => {
-          console.error('Registration failed:', err);
           this.modalService.open('Error', 'Registration failed: ' + (err.error || err.message));
         },
       });

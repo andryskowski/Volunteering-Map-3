@@ -2,34 +2,39 @@
   <h2>{{ isLoginMode ? 'Login' : 'Register' }}</h2>
 
   <form [formGroup]="authForm" (ngSubmit)="onSubmit()">
-
     <label>Login:</label>
-    <input type="text" formControlName="login">
+    <input type="text" formControlName="login" />
     <div *ngIf="authForm.get('login')?.invalid && authForm.get('login')?.touched" class="error">
       Please enter a login
     </div>
 
     <label>Password:</label>
-    <input type="password" formControlName="password">
-    <div *ngIf="authForm.get('password')?.invalid && authForm.get('password')?.touched" class="error">
+    <input type="password" formControlName="password" />
+    <div
+      *ngIf="authForm.get('password')?.invalid && authForm.get('password')?.touched"
+      class="error"
+    >
       Password must be at least 6 characters
     </div>
 
     <div *ngIf="!isLoginMode">
       <label>Confirm Password:</label>
-      <input type="password" formControlName="confirmPassword">
-      <div *ngIf="authForm.get('confirmPassword')?.invalid && authForm.get('confirmPassword')?.touched" class="error">
+      <input type="password" formControlName="confirmPassword" />
+      <div
+        *ngIf="authForm.get('confirmPassword')?.invalid && authForm.get('confirmPassword')?.touched"
+        class="error"
+      >
         This field is required
       </div>
 
       <label>Email:</label>
-      <input type="email" formControlName="email">
+      <input type="email" formControlName="email" />
       <div *ngIf="authForm.get('email')?.invalid && authForm.get('email')?.touched" class="error">
         Please enter a valid email
       </div>
 
       <label>Avatar URL:</label>
-      <input type="text" formControlName="avatarUrl">
+      <input type="text" formControlName="avatarUrl" />
     </div>
 
     <button type="submit">{{ isLoginMode ? 'Login' : 'Register' }}</button>

@@ -1,6 +1,6 @@
 :host {
   display: block;
-  height: 100vh; 
+  height: 100vh;
   overflow: hidden;
   background-color: #f2f7ff;
 }
@@ -11,7 +11,6 @@
   padding-top: 50px;
   align-items: center;
   background-color: #f2f7ff;
-
 }
 
 img {
@@ -35,19 +34,19 @@ img {
 }
 
 button {
-    border: none;
-    cursor: pointer;
-    font-size: 20px;
-    color: navy;
-    margin-top: 15px;
-    background-color: #EDA6C3;
-    border-radius: 20px;
-    width: 150px;
-    height: 45px;
-    border-color: inherit;
-    box-shadow: none;
-    box-shadow: none !important;
-    outline: none;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  color: navy;
+  margin-top: 15px;
+  background-color: #eda6c3;
+  border-radius: 20px;
+  width: 150px;
+  height: 45px;
+  border-color: inherit;
+  box-shadow: none;
+  box-shadow: none !important;
+  outline: none;
 }
 
 button:hover,
@@ -58,9 +57,9 @@ button:active {
 }
 
 .pin {
-    position: absolute;
-    left: 90%;
-    top: 0;
+  position: absolute;
+  left: 90%;
+  top: 0;
 }
 
 .flex-container-1 {

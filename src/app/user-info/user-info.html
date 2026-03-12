@@ -2,11 +2,7 @@
   <h1>User Info</h1>
   <div *ngIf="user" class="user-info">
     <div class="avatar">
-      <img
-        [src]="user.avatarUrl"
-        (error)="onAvatarError($event)"
-        [alt]="user.login + ' avatar'"
-      />
+      <img [src]="user.avatarUrl" (error)="onAvatarError($event)" [alt]="user.login + ' avatar'" />
     </div>
 
     <ul>

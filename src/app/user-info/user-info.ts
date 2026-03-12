@@ -13,9 +13,12 @@ export class UserInfoComponent implements OnInit {
   user: User | null = null;
   loading = true;
   error: string | null = null;
-  defaultAvatar: string = 'https://cdn-icons-png.flaticon.com/512/8345/8345328.png';;
+  defaultAvatar: string = 'https://cdn-icons-png.flaticon.com/512/8345/8345328.png';
 
-  constructor(private route: ActivatedRoute, private userService: UserService) {}
+  constructor(
+    private route: ActivatedRoute,
+    private userService: UserService,
+  ) {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
