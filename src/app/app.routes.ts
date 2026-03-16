@@ -1,15 +1,15 @@
 import { Routes } from '@angular/router';
-import { Contact } from './contact/contact';
-import { MainPage } from './main-page/main-page';
-import { ListPlaces } from './list-places/list-places';
-import { PlacePage } from './place-page/place-page';
-import { PlaceForm } from './place-form/place-form';
-import { UsersPanel } from './users-panel/users-panel';
-import { Auth } from './auth/auth';
-import { UserInfoComponent } from './user-info/user-info';
-import { CommentsPanel } from './comments-panel/comments-panel';
-import { LandingPage } from './landing-page/landing-page';
-import { PlacesPanel } from './places-panel/places-panel';
+import { Contact } from './components/contact/contact';
+import { MainPage } from './components/main-page/main-page';
+import { ListPlaces } from './components/list-places/list-places';
+import { PlacePage } from './components/place-page/place-page';
+import { PlaceForm } from './components/place-form/place-form';
+import { UsersPanel } from './components/users-panel/users-panel';
+import { Auth } from './components/auth/auth';
+import { UserInfoComponent } from './components/user-info/user-info';
+import { CommentsPanel } from './components/comments-panel/comments-panel';
+import { LandingPage } from './components/landing-page/landing-page';
+import { PlacesPanel } from './components/places-panel/places-panel';
 import { NotFoundComponent } from './pages/not-found/not-found';
 
 export const routes: Routes = [

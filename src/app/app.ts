@@ -1,8 +1,8 @@
 import { Component, signal } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
-import { Navbar } from './navbar/navbar';
-import { LoaderComponent } from './loader/loader';
-import { ModalComponent } from './modal/modal';
+import { Navbar } from './components/navbar/navbar';
+import { LoaderComponent } from './components/loader/loader';
+import { ModalComponent } from './components/modal/modal';
 import { CommonModule } from '@angular/common';
 import { filter } from 'rxjs';
 

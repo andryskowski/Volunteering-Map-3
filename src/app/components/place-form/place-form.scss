@@ -1,0 +1,274 @@
+a {
+  text-decoration: none !important;
+}
+
+input,
+select {
+  font-size: 0.8em;
+}
+
+a:focus {
+  color: navy;
+}
+
+a:visited {
+  color: navy;
+}
+
+textarea {
+  border-color: royalblue;
+  background-color: rgb(223, 231, 255);
+  color: navy;
+  outline: none;
+}
+
+.textarea:focus {
+  outline: none;
+  border-color: navy;
+  box-shadow: 0 5px 15px rgba(92, 119, 182, 0.4);
+}
+
+.form {
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  .submit {
+    width: 200px;
+  }
+  & > * {
+    padding: 5px 0;
+  }
+  label {
+    display: flex;
+    flex-direction: column;
+
+    input {
+      width: 450px;
+      height: 30px;
+      background-color: rgb(223, 231, 255);
+      border: 1px solid royalblue;
+      border-radius: 8px;
+      margin-top: 5px;
+      font-size: 1em;
+      color: navy;
+      outline: none;
+    }
+    input:focus {
+      border-color: navy;
+      box-shadow: 0 5px 15px rgba(92, 119, 182, 0.4);
+    }
+    select {
+      width: 450px;
+      height: 30px;
+      background-color: rgb(223, 231, 255);
+      border-radius: 8px;
+      border: 1px solid navy;
+    }
+  }
+}
+
+input[type='submit'] {
+  display: inline-block;
+  padding: 0.35em, 1.2em;
+  border: 0.1em solid royalblue;
+  margin: 0 0.3em 0.3em 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  color: royalblue;
+  text-align: center;
+  transition: all 0.2s;
+  background-color: white;
+  width: 160px;
+  cursor: pointer;
+
+  &:hover,
+  &:focus {
+    background-color: royalblue;
+    color: white;
+  }
+}
+
+.description-box {
+  height: 300px;
+  padding: 0 0 50px 0;
+  background-color: rgb(223, 231, 255);
+}
+
+.fontWeightBold {
+  font-weight: bold;
+  color: blue;
+}
+
+.fontColorWhite {
+  color: white;
+}
+
+.font-style-italic {
+  font-style: italic;
+}
+
+.display-flex {
+  display: flex !important;
+}
+
+@media only screen and (max-width: 768px) {
+  .page-container {
+    margin: 25px 0px 25px 0px;
+    padding: 10px 0px 50px 0px;
+  }
+  .form {
+    label {
+      input {
+        width: 400px;
+      }
+      select {
+        width: 400px;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 576px) {
+  .form {
+    label {
+      input {
+        width: 300px;
+      }
+      select {
+        width: 300px;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 376px) {
+  .form {
+    label {
+      input {
+        width: 175px;
+      }
+      select {
+        width: 175px;
+      }
+    }
+  }
+}
+
+.fixed-buttons {
+  position: fixed;
+  top: 75px;
+  right: 55px;
+  z-index: 99999999;
+  display: flex;
+
+  & > * {
+    margin: 5px;
+  }
+
+  .button-changelang {
+    // background-image: url("../../assets/fixed-buttons/gb.svg");
+    width: 70px;
+    height: 35px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 1.4em;
+    border-color: rgb(255, 216, 157);
+    cursor: pointer;
+  }
+
+  .button-changeinterface {
+    // background-image: url("../../assets/fixed-buttons/eye.svg");
+    width: 70px;
+    height: 35px;
+    border-radius: 8px;
+    background-color: rgb(255, 235, 205);
+    border-color: rgb(255, 216, 157);
+    cursor: pointer;
+  }
+}
+
+.flag-poland {
+  // background-image: url("../../assets/fixed-buttons/pl.svg") !important;
+}
+
+.flag-gb {
+  // background-image: url("../../assets/fixed-buttons/gb.svg") !important;
+}
+
+.loader-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+form label {
+  display: block;
+  margin-bottom: 12px;
+  font-weight: 500;
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 8px;
+  margin-top: 4px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+button {
+  padding: 10px 20px;
+  border: none;
+  background-color: #0074d9;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 100px;
+  margin: 5px;
+}
+
+button:hover {
+  background-color: #005fa3;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.modal-content {
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  text-align: center;
+  max-width: 400px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.modal-content h2 {
+  margin-bottom: 16px;
+}
+
+.modal-content button {
+  margin-top: 20px;
+}
+
+.placeform-page {
+  background-image: url('../../../assets/tree.jpg');
+  background-position: right;
+  background-repeat: no-repeat;
+}
+
+.error {
+  color: red;
+}
