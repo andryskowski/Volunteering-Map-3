@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Place } from '../../models/place.model';
+import { Place } from '../models/place.model';
 import { map, Observable, of, tap } from 'rxjs';
 import { AuthService } from './auth-service';
 

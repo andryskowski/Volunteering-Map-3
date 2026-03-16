@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
 import { BehaviorSubject, finalize } from 'rxjs';
 import { PlaceService } from '../../services/place-service';
 import { LoaderComponent } from '../loader/loader';
-import { Place } from '../../../models/place.model';
+import { Place } from '../../models/place.model';
 import { PaginationComponent } from '../pagination/pagination';
 
 @Component({

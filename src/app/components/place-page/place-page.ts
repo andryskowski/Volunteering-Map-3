@@ -5,7 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { PlaceService } from '../../services/place-service';
-import { Place } from '../../../models/place.model';
+import { Place } from '../../models/place.model';
 import { CommentsComponent } from '../comment/comment';
 import { CommentFormComponent } from '../comment-form/comment-form';
 

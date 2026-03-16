@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { tileLayer, latLng, MapOptions, marker, icon, Map } from 'leaflet';
 import { PlaceService } from '../../services/place-service';
-import { Place } from '../../../models/place.model';
+import { Place } from '../../models/place.model';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
 @Component({

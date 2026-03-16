@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PlaceService } from '../../services/place-service';
-import { Place } from '../../../models/place.model';
+import { Place } from '../../models/place.model';
 import { EntityPanelComponent, DeletableEntity } from '../entity-panel/entity-panel';
 import { BehaviorSubject, finalize, tap } from 'rxjs';
 import { ModalService } from '../../services/modal-service';
