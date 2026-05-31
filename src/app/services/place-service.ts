@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { map, Observable } from 'rxjs';
 import { Place } from '../models/place.model';
-import { map, Observable, of, tap } from 'rxjs';
 import { AuthService } from './auth-service';
 
 @Injectable({ providedIn: 'root' })
 export class PlaceService {
-  private places: Place[] = [];
-  private apiUrl = 'http://localhost:8080/places';
+
+  private readonly apiUrl = 'http://localhost:8080/places';
 
   constructor(
     private http: HttpClient,
@@ -16,39 +16,52 @@ export class PlaceService {
 
   private getAuthHeaders(): { headers: HttpHeaders } {
     const token = this.authService.getToken();
-    if (!token) console.warn('No JWT token available!');
-    return { headers: new HttpHeaders({ Authorization: `Bearer ${token}` }) };
+
+    return {
+      headers: new HttpHeaders({
+        Authorization: token ? `Bearer ${token}` : ''
+      })
+    };
   }
 
   loadPlaces(): Observable<Place[]> {
-    if (this.places.length) return of(this.places);
-
-    return this.http.get<Place[]>(this.apiUrl, this.getAuthHeaders()).pipe(
-      tap((data) => {
-        this.places = data;
-      }),
+    return this.http.get<Place[]>(
+      this.apiUrl,
+      this.getAuthHeaders()
     );
   }
 
   getPlaceById(id: number): Observable<Place> {
-    return this.http.get<Place>(`${this.apiUrl}/${id}`, this.getAuthHeaders());
-  }
-
-  postPlace(place: Place): Observable<Place> {
-    return this.http.post<Place>(this.apiUrl, place, this.getAuthHeaders()).pipe(
-      tap((newPlace) => {
-        this.places.push(newPlace);
-      }),
+    return this.http.get<Place>(
+      `${this.apiUrl}/${id}`,
+      this.getAuthHeaders()
     );
   }
 
-  updatePlace(id: number, data: any): Observable<Place> {
+  postPlace(place: Place): Observable<Place> {
+    return this.http.post<Place>(
+      this.apiUrl,
+      place,
+      this.getAuthHeaders()
+    );
+  }
+
+  updatePlace(id: number, data: Partial<Place>): Observable<Place> {
     return this.http
-      .put<{ success: boolean; place: Place; message: string }>(`${this.apiUrl}/${id}`, data)
-      .pipe(map((res) => res.place));
+      .put<{ success: boolean; place: Place }>(
+        `${this.apiUrl}/${id}`,
+        data,
+        this.getAuthHeaders()
+      )
+      .pipe(
+        map(res => res.place)
+      );
   }
 
   deletePlace(id: number): Observable<{ success: boolean; message: string }> {
-    return this.http.delete<{ success: boolean; message: string }>(`${this.apiUrl}/${id}`);
+    return this.http.delete<{ success: boolean; message: string }>(
+      `${this.apiUrl}/${id}`,
+      this.getAuthHeaders()
+    );
   }
 }

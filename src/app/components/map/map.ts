@@ -1,8 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { tileLayer, latLng, MapOptions, marker, icon, Map } from 'leaflet';
 import { PlaceService } from '../../services/place-service';
 import { Place } from '../../models/place.model';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { loadPlaces } from '../../store/places/places.actions';
+import { selectAllPlaces } from '../../store/places/places.selectors';
 
 @Component({
   selector: 'app-map',
@@ -35,7 +39,15 @@ export class MapComponent {
     ],
   };
 
+  places$!: Observable<Place[]>;
+  private store = inject(Store);
+
   constructor(private placeService: PlaceService) {}
+
+  ngOnInit() {
+    this.store.dispatch(loadPlaces());
+    this.places$ = this.store.select(selectAllPlaces);
+  }
 
   getIconByCategory(category: string) {
     let iconUrl = this.pin6;
@@ -69,26 +81,26 @@ export class MapComponent {
   }
 
   onMapReady(map: Map) {
-    this.placeService.loadPlaces().subscribe((places: Place[]) => {
-      places.forEach((p) => {
-        if (p.lat != null && p.lng != null) {
-          const m = marker([p.lat, p.lng], {
-            icon: this.getIconByCategory(p.category),
-          });
+  this.places$.subscribe((places) => {
+    places.forEach((p) => {
+      if (p.lat != null && p.lng != null) {
+        const m = marker([p.lat, p.lng], {
+          icon: this.getIconByCategory(p.category),
+        });
 
-          m.bindPopup(`
-  <div style="text-align:center;">
-    <img src="${p.img}" alt="${p.name}" style="max-width:100px; border-radius:8px; margin-bottom:8px;" />
-    <div><b>${p.name}</b></div>
-    <div>${p.street} ${p.houseNo}</div>
-    <div>${p.city}</div>
-    <div><a href="/place/${p._id}">Details</a></div>
-  </div>
-`);
+        m.bindPopup(`
+          <div style="text-align:center;">
+            <img src="${p.img}" style="max-width:100px;" />
+            <div><b>${p.name}</b></div>
+            <div>${p.street} ${p.houseNo}</div>
+            <div>${p.city}</div>
+            <div><a href="/place/${p._id}">Details</a></div>
+          </div>
+        `);
 
-          m.addTo(map);
-        }
-      });
+        m.addTo(map);
+      }
     });
-  }
+  });
+}
 }

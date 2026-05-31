@@ -1,12 +1,17 @@
 import { CommonModule, DatePipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { BehaviorSubject, finalize } from 'rxjs';
-import { PlaceService } from '../../services/place-service';
+import { Observable, tap } from 'rxjs';
+
+import { Store } from '@ngrx/store';
+
 import { LoaderComponent } from '../loader/loader';
-import { Place } from '../../models/place.model';
 import { PaginationComponent } from '../pagination/pagination';
+import { Place } from '../../models/place.model';
+
+import { loadPlaces, updateFilters } from '../../store/places/places.actions';
+import { selectFilteredPlaces, selectLoading } from '../../store/places/places.selectors';
 
 @Component({
   selector: 'app-list-places',
@@ -23,21 +28,16 @@ import { PaginationComponent } from '../pagination/pagination';
   ],
 })
 export class ListPlaces implements OnInit {
-  places: Place[] = [];
-  filteredPlaces: Place[] = [];
-  paginatedPlaces: Place[] = [];
+  places$!: Observable<Place[]>;
+  loading$!: Observable<boolean>;
 
-  filterForm: FormGroup;
   currentPage = 1;
   itemsPerPage = 4;
 
-  private loadingSubject = new BehaviorSubject<boolean>(true);
-  loading$ = this.loadingSubject.asObservable();
+  filterForm: FormGroup;
+  private store = inject(Store);
 
-  constructor(
-    private fb: FormBuilder,
-    private placeService: PlaceService,
-  ) {
+  constructor(private fb: FormBuilder) {
     this.filterForm = this.fb.group({
       district: [''],
       category: [''],
@@ -47,66 +47,35 @@ export class ListPlaces implements OnInit {
   }
 
   ngOnInit(): void {
-    this.filterForm.valueChanges.subscribe(() => {
+    this.store.dispatch(loadPlaces());
+
+    this.places$ = this.store.select(selectFilteredPlaces);
+    this.loading$ = this.store.select(selectLoading);
+
+    this.filterForm.valueChanges.subscribe((values) => {
       this.currentPage = 1;
-      this.applyFilters();
+
+      this.store.dispatch(
+        updateFilters({
+          district: values.district,
+          category: values.category,
+          search: values.searchName,
+          sort: values.sort,
+        }),
+      );
     });
-
-    this.fetchPlaces();
   }
 
-  fetchPlaces(): void {
-    this.loadingSubject.next(true);
-
-    this.placeService
-      .loadPlaces()
-      .pipe(finalize(() => this.loadingSubject.next(false)))
-      .subscribe({
-        next: (data) => {
-          this.places = data.map((p) => ({ ...p, date: new Date(p.date) }));
-          this.applyFilters();
-        },
-        error: (err) => {
-          console.error('Error loading places', err);
-          this.places = [];
-          this.filteredPlaces = [];
-          this.paginatedPlaces = [];
-        },
-      });
+  paginate(places: Place[]): Place[] {
+    const start = (this.currentPage - 1) * this.itemsPerPage;
+    return places.slice(start, start + this.itemsPerPage);
   }
 
-  applyFilters(): void {
-    const { district, category, searchName, sort } = this.filterForm.value;
-
-    this.filteredPlaces = this.places.filter((place) => {
-      let match = true;
-      if (district) match = match && place.district === district;
-      if (category) match = match && place.category === category;
-      if (searchName) {
-        const search = searchName.toLowerCase().trim();
-        const name = (place.name || '').toLowerCase();
-        match = match && name.includes(search);
-      }
-      return match;
-    });
-
-    if (sort === 'newest') {
-      this.filteredPlaces.sort((a, b) => b.date.getTime() - a.date.getTime());
-    } else if (sort === 'oldest') {
-      this.filteredPlaces.sort((a, b) => a.date.getTime() - b.date.getTime());
-    }
-
-    this.paginate(this.currentPage);
+  changePage(page: number): void {
+    this.currentPage = page;
   }
 
-  paginate(pageNumber: number): void {
-    this.currentPage = pageNumber;
-    const startIndex = (pageNumber - 1) * this.itemsPerPage;
-    const endIndex = startIndex + this.itemsPerPage;
-    this.paginatedPlaces = this.filteredPlaces.slice(startIndex, endIndex);
-  }
-
-  get totalPages(): number {
-    return Math.ceil(this.filteredPlaces.length / this.itemsPerPage);
+  getTotalPages(places: Place[]): number {
+    return Math.ceil(places.length / this.itemsPerPage);
   }
 }
